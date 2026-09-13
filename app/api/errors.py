@@ -5,17 +5,13 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 
 from fastapi import Request
-from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.artifacts.store import ArtifactNotReadyError, InvalidManifestError
 from app.core.errors import (
-    AccountNotFoundError,
-    DataSourceUnavailableError,
     InvalidApiKeyError,
     ModelVersionMismatchError,
     ServiceNotConfiguredError,
-    UserNotFoundError,
 )
 from app.services.base import ModelNotReadyError
 
@@ -34,17 +30,12 @@ ERROR_SPECS: dict[type[Exception], ErrorSpec] = {
     ServiceNotConfiguredError: ErrorSpec(
         503, "SERVICE_NOT_CONFIGURED", "Protected service configuration is incomplete"
     ),
-    UserNotFoundError: ErrorSpec(404, "USER_NOT_FOUND", "User not found"),
-    AccountNotFoundError: ErrorSpec(404, "ACCOUNT_NOT_FOUND", "Account not found"),
     ModelVersionMismatchError: ErrorSpec(
         409, "MODEL_VERSION_MISMATCH", "Model artifact version is incompatible"
     ),
     ModelNotReadyError: ErrorSpec(503, "MODEL_NOT_READY", "Requested model is not ready"),
     ArtifactNotReadyError: ErrorSpec(503, "MODEL_NOT_READY", "Requested model is not ready"),
     InvalidManifestError: ErrorSpec(503, "MODEL_NOT_READY", "Requested model is not ready"),
-    DataSourceUnavailableError: ErrorSpec(
-        503, "DATA_SOURCE_UNAVAILABLE", "Financial data source is unavailable"
-    ),
 }
 
 
@@ -55,8 +46,10 @@ def request_id(request: Request) -> str:
 
 def error_response(request: Request, spec: ErrorSpec) -> JSONResponse:
     """Build the common error envelope without exception internals."""
+    headers = {"WWW-Authenticate": "Bearer"} if spec.status_code == 401 else None
     return JSONResponse(
         status_code=spec.status_code,
+        headers=headers,
         content={
             "error": {
                 "code": spec.code,

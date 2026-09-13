@@ -1,0 +1,32 @@
+{
+  "algorithm": "global quantile gradient boosting + residual Monte Carlo",
+  "features": [
+    "remaining",
+    "days_to_target",
+    "current_saved",
+    "target_amount",
+    "progress",
+    "monthly_contribution_mean",
+    "monthly_contribution_std",
+    "contribution_count",
+    "monthly_free_cash_mean",
+    "monthly_free_cash_std",
+    "cash_history_days"
+  ],
+  "metrics": {
+    "date_within_30_days": 0.2083,
+    "probability_brier_score": 0.1096,
+    "quantile_coverage_p10_p90": 0.5,
+    "recommended_contribution_mae": 2986.0647,
+    "test": {
+      "mae": 113.8334,
+      "rmse": 146.483
+    },
+    "validation": {
+      "mae": 78.388,
+      "rmse": 103.9242
+    }
+  },
+  "schema_version": "1",
+  "temporal_split": "per-profile chronological 70/15/15"
+}

@@ -1,15 +1,13 @@
-"""Shared Pydantic prediction contracts."""
+"""Shared Pydantic inference contracts."""
 
-from datetime import UTC, date, datetime
-from enum import StrEnum
-from typing import Annotated, Generic, Literal, TypeVar
+from datetime import UTC, datetime
+from typing import Annotated, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, JsonValue, field_validator
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, JsonValue, field_validator
 
 Confidence = Annotated[float, Field(ge=0.0, le=1.0)]
-SummaryT = TypeVar("SummaryT", bound=BaseModel)
-SeriesT = TypeVar("SeriesT", bound=BaseModel)
+OpaqueId = Annotated[str, Field(min_length=1, max_length=200)]
 ModelName = Literal[
     "forecast_cash_balance",
     "predict_savings_goal",
@@ -24,24 +22,14 @@ def utc_now() -> datetime:
 
 
 class StrictModel(BaseModel):
-    """Base contract that rejects accidental or unversioned fields."""
+    """Reject unknown fields, non-finite numbers, and accidental contract drift."""
 
-    model_config = ConfigDict(extra="forbid", validate_assignment=True)
-
-
-class VisualizationType(StrEnum):
-    """Presentation-neutral hints understood by upstream callers."""
-
-    AREA_CHART = "area_chart"
-    HEATMAP_CHART = "heatmap_chart"
-
-
-class VisualizationHint(StrictModel):
-    """A semantic visualization suggestion, never an A2UI component tree."""
-
-    type: VisualizationType
-    x_field: str | None = None
-    y_fields: list[str] = Field(default_factory=list)
+    model_config = ConfigDict(
+        extra="forbid",
+        validate_assignment=True,
+        allow_inf_nan=False,
+        str_strip_whitespace=True,
+    )
 
 
 class PredictionDriver(StrictModel):
@@ -54,33 +42,43 @@ class PredictionDriver(StrictModel):
 
 
 class CommonPredictionRequest(StrictModel):
-    """Fields supplied to every prediction service by a trusted internal caller."""
+    """Stateless request metadata supplied by a trusted HTTP consumer."""
 
-    user_id: UUID
-    as_of: date | None = None
+    request_id: UUID
+    as_of: AwareDatetime
+    currency: str = Field(min_length=3, max_length=3, pattern=r"^[A-Z]{3}$")
+
+    @field_validator("as_of")
+    @classmethod
+    def normalize_as_of_to_utc(cls, value: datetime) -> datetime:
+        return value.astimezone(UTC)
+
+    @field_validator("currency", mode="before")
+    @classmethod
+    def normalize_currency(cls, value: object) -> object:
+        return value.strip().upper() if isinstance(value, str) else value
 
 
-class CommonPredictionResponse(StrictModel, Generic[SummaryT, SeriesT]):
-    """Stable metadata and extension points shared by all predictions."""
+class CommonPredictionResponse[
+    SummaryT: BaseModel,
+    SeriesT: BaseModel,
+    ItemT: BaseModel,
+](StrictModel):
+    """Stable, presentation-neutral response shared by all predictions."""
 
+    request_id: UUID
     model_name: ModelName
     model_version: str = Field(pattern=r"^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
-    user_id: UUID
-    generated_at: datetime = Field(default_factory=utc_now)
-    trained_until: datetime | None
+    trained_until: AwareDatetime
+    generated_at: AwareDatetime = Field(default_factory=utc_now)
     confidence: Confidence
     summary: SummaryT
     series: list[SeriesT]
+    items: list[ItemT] = Field(default_factory=list)
     drivers: list[PredictionDriver] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
-    visualization_hint: VisualizationHint
 
-    @field_validator("generated_at", "trained_until")
+    @field_validator("trained_until", "generated_at")
     @classmethod
-    def require_aware_datetime(cls, value: datetime | None) -> datetime | None:
-        """Reject ambiguous datetimes and normalize accepted timestamps to UTC."""
-        if value is None:
-            return None
-        if value.tzinfo is None or value.utcoffset() is None:
-            raise ValueError("datetime must include a timezone")
+    def normalize_response_datetimes_to_utc(cls, value: datetime) -> datetime:
         return value.astimezone(UTC)

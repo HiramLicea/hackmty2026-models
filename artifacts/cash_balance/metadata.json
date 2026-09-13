@@ -1,0 +1,41 @@
+{
+  "algorithm": "global GradientBoostingRegressor quantile residual forecast",
+  "features": [
+    "current_balance",
+    "horizon_days",
+    "daily_net_mean_30",
+    "daily_net_std_30",
+    "daily_income_mean_30",
+    "daily_expense_mean_30",
+    "expense_trend",
+    "weekday",
+    "month",
+    "history_days",
+    "scheduled_net",
+    "scheduled_income",
+    "scheduled_expense"
+  ],
+  "metrics": {
+    "by_horizon_days": {
+      "15": {
+        "mae": 26554.1656,
+        "rmse": 37892.9397
+      },
+      "30": {
+        "mae": 39214.9818,
+        "rmse": 55248.4917
+      },
+      "7": {
+        "mae": 11834.5446,
+        "rmse": 22090.3331
+      }
+    },
+    "interval_coverage_p10_p90": 0.7611,
+    "validation": {
+      "mae": 24562.3759,
+      "rmse": 35596.2703
+    }
+  },
+  "schema_version": "1",
+  "temporal_split": "per-profile chronological 70/15/15"
+}

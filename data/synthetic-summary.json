@@ -1,0 +1,30 @@
+{
+  "schema_version": "1",
+  "seed": 2026,
+  "users": 120,
+  "months": 18,
+  "start_date": "2025-03-02",
+  "end_date": "2026-08-31",
+  "transactions": 72000,
+  "transactions_per_profile": {
+    "minimum": 600,
+    "maximum": 600,
+    "mean": 600.0
+  },
+  "archetypes": {
+    "stable_income": 10,
+    "variable_income": 10,
+    "comfortable_balance": 10,
+    "tight_balance": 10,
+    "seasonal_spending": 10,
+    "growing_expenses": 10,
+    "consistent_saving": 10,
+    "irregular_saving": 10,
+    "subscription_heavy": 10,
+    "high_variability": 10,
+    "simulated_unemployment": 10,
+    "extraordinary_expenses": 10
+  },
+  "labeled_anomalies": 2270,
+  "dataset_fingerprint": "00203144e269ec70bab58895d99de42bd784c0cb3bb8ce29361de31b01ebdb9f"
+}

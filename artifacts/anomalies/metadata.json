@@ -1,0 +1,39 @@
+{
+  "algorithm": "StandardScaler + unsupervised IsolationForest + explainable rules",
+  "features": [
+    "log_amount",
+    "is_credit",
+    "hour_sin",
+    "hour_cos",
+    "weekday_sin",
+    "weekday_cos",
+    "category_amount_ratio",
+    "merchant_amount_ratio",
+    "merchant_frequency",
+    "category_frequency",
+    "days_since_previous",
+    "transactions_last_24h",
+    "is_new_merchant"
+  ],
+  "metrics": {
+    "fit_labels_used": false,
+    "test": {
+      "alert_rate": 0.0126,
+      "f1": 0.5176,
+      "false_positive_rate": 0.0011,
+      "pr_auc": 0.8595,
+      "precision": 0.9191,
+      "recall": 0.3602
+    },
+    "validation": {
+      "alert_rate": 0.0138,
+      "f1": 0.5188,
+      "false_positive_rate": 0.0011,
+      "pr_auc": 0.8718,
+      "precision": 0.9262,
+      "recall": 0.3603
+    }
+  },
+  "schema_version": "1",
+  "temporal_split": "per-profile chronological 70/15/15"
+}

@@ -1,0 +1,277 @@
+{
+  "artifacts": {
+    "detect_transaction_anomalies": {
+      "features": [
+        "log_amount",
+        "is_credit",
+        "hour_sin",
+        "hour_cos",
+        "weekday_sin",
+        "weekday_cos",
+        "category_amount_ratio",
+        "merchant_amount_ratio",
+        "merchant_frequency",
+        "category_frequency",
+        "days_since_previous",
+        "transactions_last_24h",
+        "is_new_merchant"
+      ],
+      "files": {
+        "isolation_forest": {
+          "format": "joblib",
+          "path": "anomalies/isolation_forest.joblib",
+          "sha256": "92affe36ccbc03eec800cc3ef623d69ead2aa21f5a7ca7a325a6b47768bfe81a",
+          "size_bytes": 1947769
+        },
+        "metadata": {
+          "format": "json",
+          "path": "anomalies/metadata.json",
+          "sha256": "a719623ee140eddd924a9f71d743906fe8c887784164ef7211f15b6cead8c8aa",
+          "size_bytes": 899
+        },
+        "preprocessor": {
+          "format": "joblib",
+          "path": "anomalies/preprocessor.joblib",
+          "sha256": "69026f8cdded07e9a20a95002140f62d0cf3732ee45a83e51d019fe37a956660",
+          "size_bytes": 756
+        },
+        "rule_config": {
+          "format": "json",
+          "path": "anomalies/rule_config.json",
+          "sha256": "5e610c116f18108c23dfde3a342dea4d01b43118f21a52b073831b970db6c1db",
+          "size_bytes": 215
+        }
+      },
+      "limitations": [
+        "Isolation Forest ranks unusual behavior; it does not prove fraud.",
+        "Rules require sufficient merchant/category history for strongest explanations."
+      ],
+      "metrics": {
+        "fit_labels_used": false,
+        "test": {
+          "alert_rate": 0.0126,
+          "f1": 0.5176,
+          "false_positive_rate": 0.0011,
+          "pr_auc": 0.8595,
+          "precision": 0.9191,
+          "recall": 0.3602
+        },
+        "validation": {
+          "alert_rate": 0.0138,
+          "f1": 0.5188,
+          "false_positive_rate": 0.0011,
+          "pr_auc": 0.8718,
+          "precision": 0.9262,
+          "recall": 0.3603
+        }
+      },
+      "model_version": "0.1.0",
+      "trained_until": "2026-08-31T23:59:59+00:00"
+    },
+    "forecast_cash_balance": {
+      "features": [
+        "current_balance",
+        "horizon_days",
+        "daily_net_mean_30",
+        "daily_net_std_30",
+        "daily_income_mean_30",
+        "daily_expense_mean_30",
+        "expense_trend",
+        "weekday",
+        "month",
+        "history_days",
+        "scheduled_net",
+        "scheduled_income",
+        "scheduled_expense"
+      ],
+      "files": {
+        "forecast_p10": {
+          "format": "joblib",
+          "path": "cash_balance/forecast_p10.joblib",
+          "sha256": "2b9cf1b22f057a64f564c53f9ee5d80c18b224663d84aced9d9ad30c33025a32",
+          "size_bytes": 24350
+        },
+        "forecast_p50": {
+          "format": "joblib",
+          "path": "cash_balance/forecast_p50.joblib",
+          "sha256": "793bfed157604d968cfa824ec6a406ef2460d5df59844d2cf2852cf0822da698",
+          "size_bytes": 24754
+        },
+        "forecast_p90": {
+          "format": "joblib",
+          "path": "cash_balance/forecast_p90.joblib",
+          "sha256": "836e94b399dc0fe93c27835db66be2e10ef560f79bc84a8b7378f1f6defd0597",
+          "size_bytes": 24705
+        },
+        "metadata": {
+          "format": "json",
+          "path": "cash_balance/metadata.json",
+          "sha256": "2634377c0c710c524406cc0f05a4f1500293628a0b9381bc16b377ce012ff5af",
+          "size_bytes": 870
+        },
+        "preprocessor": {
+          "format": "joblib",
+          "path": "cash_balance/preprocessor.joblib",
+          "sha256": "5c52b40e45183a4012459d40496331d74eff81221a260293887a95d90cd250ec",
+          "size_bytes": 680
+        }
+      },
+      "limitations": [
+        "Synthetic MXN behavior may not represent every household.",
+        "Known scheduled flows are added deterministically and assumed to occur."
+      ],
+      "metrics": {
+        "by_horizon_days": {
+          "15": {
+            "mae": 26554.1656,
+            "rmse": 37892.9397
+          },
+          "30": {
+            "mae": 39214.9818,
+            "rmse": 55248.4917
+          },
+          "7": {
+            "mae": 11834.5446,
+            "rmse": 22090.3331
+          }
+        },
+        "interval_coverage_p10_p90": 0.7611,
+        "validation": {
+          "mae": 24562.3759,
+          "rmse": 35596.2703
+        }
+      },
+      "model_version": "0.1.0",
+      "trained_until": "2026-08-31T23:59:59+00:00"
+    },
+    "forecast_recurring_charges": {
+      "features": [
+        "normalized_merchant",
+        "interval_days",
+        "interval_mad",
+        "median_amount",
+        "observations"
+      ],
+      "files": {
+        "detector_config": {
+          "format": "json",
+          "path": "recurring_charges/detector_config.json",
+          "sha256": "f0c01ba1dd2f28707ab8dc20cfa88aaaa86e14318ae5f3673cde969da729902a",
+          "size_bytes": 142
+        },
+        "merchant_normalization": {
+          "format": "json",
+          "path": "recurring_charges/merchant_normalization.json",
+          "sha256": "d3413b9a6f11bb0bf70d3059db88122371c21d00487208511a336b03f4339fcf",
+          "size_bytes": 220
+        },
+        "metadata": {
+          "format": "json",
+          "path": "recurring_charges/metadata.json",
+          "sha256": "e41e34cbe97729dcedf8e0a1443000fc919c3920b085c2d59d6762ea6a389d38",
+          "size_bytes": 322
+        }
+      },
+      "limitations": [
+        "At least three historical debits per merchant are required.",
+        "Merchant normalization is language-agnostic but intentionally conservative."
+      ],
+      "metrics": {
+        "candidate_configurations": 12,
+        "mean_expected_amount_error": 32.6677,
+        "mean_next_date_error_days": 8.883,
+        "method": "merchant normalization + median interval/MAD",
+        "temporal_split": "per-profile chronological 70/15/15",
+        "validation_f1": 0.6971,
+        "validation_precision": 1.0,
+        "validation_recall": 0.535
+      },
+      "model_version": "0.1.0",
+      "trained_until": "2026-08-31T23:59:59+00:00"
+    },
+    "predict_savings_goal": {
+      "features": [
+        "remaining",
+        "days_to_target",
+        "current_saved",
+        "target_amount",
+        "progress",
+        "monthly_contribution_mean",
+        "monthly_contribution_std",
+        "contribution_count",
+        "monthly_free_cash_mean",
+        "monthly_free_cash_std",
+        "cash_history_days"
+      ],
+      "files": {
+        "goal_days_p10": {
+          "format": "joblib",
+          "path": "savings_goal/goal_days_p10.joblib",
+          "sha256": "a5e36222762089e392476eeadeef513e0f4bb55bb3069f94a2c5abc76465f995",
+          "size_bytes": 21813
+        },
+        "goal_days_p50": {
+          "format": "joblib",
+          "path": "savings_goal/goal_days_p50.joblib",
+          "sha256": "5b2978ed4c0cb1fc03661f98c89ad0ca2365b0c62f35d15f3b70564042c6145a",
+          "size_bytes": 24108
+        },
+        "goal_days_p90": {
+          "format": "joblib",
+          "path": "savings_goal/goal_days_p90.joblib",
+          "sha256": "a9016ad6d0b56c62845cafa87b4521f37dbd28ec151d0a00fe3259d18172f983",
+          "size_bytes": 17903
+        },
+        "metadata": {
+          "format": "json",
+          "path": "savings_goal/metadata.json",
+          "sha256": "39ef3fb65d1146ec7342ac301d0a3039c1a58d8171585058ee71d175e3e1fd72",
+          "size_bytes": 768
+        },
+        "preprocessor": {
+          "format": "joblib",
+          "path": "savings_goal/preprocessor.joblib",
+          "sha256": "520b70b4d6c1dd1521a57098ce1aa9ea35fc6e01860e82d5e9242c44d87df086",
+          "size_bytes": 704
+        },
+        "simulation_config": {
+          "format": "json",
+          "path": "savings_goal/simulation_config.json",
+          "sha256": "ca48fde67d9d15b6b78b6b528a18270aee2ce66d1ab944833fa3cec04a5c1cd6",
+          "size_bytes": 172
+        }
+      },
+      "limitations": [
+        "Completion scenarios assume recent contribution behavior remains informative.",
+        "Monte Carlo uncertainty is calibrated on synthetic residuals."
+      ],
+      "metrics": {
+        "date_within_30_days": 0.2083,
+        "probability_brier_score": 0.1096,
+        "quantile_coverage_p10_p90": 0.5,
+        "recommended_contribution_mae": 2986.0647,
+        "test": {
+          "mae": 113.8334,
+          "rmse": 146.483
+        },
+        "validation": {
+          "mae": 78.388,
+          "rmse": 103.9242
+        }
+      },
+      "model_version": "0.1.0",
+      "trained_until": "2026-08-31T23:59:59+00:00"
+    }
+  },
+  "dataset_fingerprint": "00203144e269ec70bab58895d99de42bd784c0cb3bb8ce29361de31b01ebdb9f",
+  "input_contract_version": "1",
+  "libraries": {
+    "joblib": "1.6.0",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.1"
+  },
+  "manifest_version": "1",
+  "python_version": "3.12",
+  "seed": 2026,
+  "trained_at": "2026-09-01T00:00:00+00:00"
+}

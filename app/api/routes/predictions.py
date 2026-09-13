@@ -10,7 +10,7 @@ from app.api.dependencies import (
     get_recurring_charges_service,
     get_savings_goal_service,
 )
-from app.core.security import require_mcp_api_key
+from app.core.security import require_inference_api_key
 from app.models.anomalies import AnomalyDetectionRequest, AnomalyDetectionResponse
 from app.models.cash_balance import CashBalanceForecastRequest, CashBalanceForecastResponse
 from app.models.operational import ErrorResponse
@@ -25,7 +25,6 @@ from app.services import (
 
 ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
     401: {"model": ErrorResponse},
-    404: {"model": ErrorResponse},
     409: {"model": ErrorResponse},
     422: {"model": ErrorResponse},
     500: {"model": ErrorResponse},
@@ -35,7 +34,7 @@ ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
 router = APIRouter(
     prefix="/v1/predictions",
     tags=["predictions"],
-    dependencies=[Depends(require_mcp_api_key)],
+    dependencies=[Depends(require_inference_api_key)],
 )
 
 

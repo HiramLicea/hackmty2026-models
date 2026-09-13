@@ -1,10 +1,9 @@
-"""Contracts for statistical recurring-charge forecasts."""
+"""Contracts for stateless recurring-charge forecasts."""
 
 from datetime import date
 from typing import Literal
-from uuid import UUID
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from app.models.common import (
     CommonPredictionRequest,
@@ -12,12 +11,29 @@ from app.models.common import (
     Confidence,
     StrictModel,
 )
+from app.models.inputs import NormalizedTransaction
+from app.preprocessing import (
+    ensure_datetimes_chronological,
+    ensure_history_not_after,
+    ensure_record_limit,
+)
+from app.preprocessing.records import MAX_RECORDS_PER_REQUEST
 
 
 class RecurringChargesRequest(CommonPredictionRequest):
-    account_id: UUID | None = None
-    lookback_days: int = Field(default=365, ge=90, le=730)
-    forecast_days: int = Field(default=90, ge=7, le=365)
+    forecast_days: int = Field(default=30, ge=7, le=365)
+    transactions: list[NormalizedTransaction] = Field(
+        default_factory=list,
+        max_length=MAX_RECORDS_PER_REQUEST,
+    )
+
+    @model_validator(mode="after")
+    def validate_records(self) -> "RecurringChargesRequest":
+        ensure_record_limit(self.transactions)
+        timestamps = [record.occurred_at for record in self.transactions]
+        ensure_datetimes_chronological(timestamps)
+        ensure_history_not_after(timestamps, self.as_of)
+        return self
 
 
 class RecurringChargesSummary(StrictModel):
@@ -36,8 +52,9 @@ class RecurringChargePoint(StrictModel):
 
 
 class RecurringChargesResponse(
-    CommonPredictionResponse[RecurringChargesSummary, RecurringChargePoint]
+    CommonPredictionResponse[RecurringChargesSummary, RecurringChargePoint, RecurringChargePoint]
 ):
     model_name: Literal["forecast_recurring_charges"] = "forecast_recurring_charges"
     summary: RecurringChargesSummary
-    series: list[RecurringChargePoint]
+    series: list[RecurringChargePoint] = Field(default_factory=list)
+    items: list[RecurringChargePoint]

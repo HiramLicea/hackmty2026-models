@@ -1,0 +1,1154 @@
+{
+  "generator": "scripts/generate_synthetic_data.py",
+  "metrics": {
+    "detect_transaction_anomalies": {
+      "fit_labels_used": false,
+      "test": {
+        "alert_rate": 0.0126,
+        "f1": 0.5176,
+        "false_positive_rate": 0.0011,
+        "pr_auc": 0.8595,
+        "precision": 0.9191,
+        "recall": 0.3602
+      },
+      "validation": {
+        "alert_rate": 0.0138,
+        "f1": 0.5188,
+        "false_positive_rate": 0.0011,
+        "pr_auc": 0.8718,
+        "precision": 0.9262,
+        "recall": 0.3603
+      }
+    },
+    "forecast_cash_balance": {
+      "by_horizon_days": {
+        "15": {
+          "mae": 26554.1656,
+          "rmse": 37892.9397
+        },
+        "30": {
+          "mae": 39214.9818,
+          "rmse": 55248.4917
+        },
+        "7": {
+          "mae": 11834.5446,
+          "rmse": 22090.3331
+        }
+      },
+      "interval_coverage_p10_p90": 0.7611,
+      "validation": {
+        "mae": 24562.3759,
+        "rmse": 35596.2703
+      }
+    },
+    "forecast_recurring_charges": {
+      "candidate_configurations": 12,
+      "mean_expected_amount_error": 32.6677,
+      "mean_next_date_error_days": 8.883,
+      "method": "merchant normalization + median interval/MAD",
+      "temporal_split": "per-profile chronological 70/15/15",
+      "validation_f1": 0.6971,
+      "validation_precision": 1.0,
+      "validation_recall": 0.535
+    },
+    "predict_savings_goal": {
+      "date_within_30_days": 0.2083,
+      "probability_brier_score": 0.1096,
+      "quantile_coverage_p10_p90": 0.5,
+      "recommended_contribution_mae": 2986.0647,
+      "test": {
+        "mae": 113.8334,
+        "rmse": 146.483
+      },
+      "validation": {
+        "mae": 78.388,
+        "rmse": 103.9242
+      }
+    }
+  },
+  "months": 18,
+  "partition_cutoffs": [
+    {
+      "profile_id": "syn-profile-0000",
+      "test_from": "2026-06-07T03:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-13T03:00:00+00:00",
+      "validation_from": "2026-03-14T19:00:00+00:00",
+      "validation_until": "2026-06-06T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0001",
+      "test_from": "2026-06-15T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-20T11:00:00+00:00",
+      "validation_from": "2026-03-21T11:00:00+00:00",
+      "validation_until": "2026-06-13T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0002",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-18T22:00:00+00:00",
+      "validation_from": "2026-03-19T17:00:00+00:00",
+      "validation_until": "2026-06-04T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0003",
+      "test_from": "2026-06-09T21:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-18T16:00:00+00:00",
+      "validation_from": "2026-03-21T07:00:00+00:00",
+      "validation_until": "2026-06-08T17:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0004",
+      "test_from": "2026-06-04T13:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-21T11:00:00+00:00",
+      "validation_from": "2026-03-21T22:00:00+00:00",
+      "validation_until": "2026-06-04T03:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0005",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-31T16:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-11T13:00:00+00:00",
+      "validation_from": "2026-03-12T08:00:00+00:00",
+      "validation_until": "2026-06-07T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0006",
+      "test_from": "2026-06-07T12:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-21T16:00:00+00:00",
+      "validation_from": "2026-03-23T07:00:00+00:00",
+      "validation_until": "2026-06-06T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0007",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-31T10:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-24T18:00:00+00:00",
+      "validation_from": "2026-03-25T22:00:00+00:00",
+      "validation_until": "2026-06-11T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0008",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T12:00:00+00:00",
+      "train_from": "2025-03-02T20:00:00+00:00",
+      "train_until": "2026-03-16T07:00:00+00:00",
+      "validation_from": "2026-03-16T22:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0009",
+      "test_from": "2026-06-06T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-17T16:00:00+00:00",
+      "validation_from": "2026-03-18T13:00:00+00:00",
+      "validation_until": "2026-06-05T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0010",
+      "test_from": "2026-06-09T16:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-19T14:00:00+00:00",
+      "validation_from": "2026-03-20T16:00:00+00:00",
+      "validation_until": "2026-06-08T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0011",
+      "test_from": "2026-06-14T20:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-19T19:00:00+00:00",
+      "validation_from": "2026-03-21T07:00:00+00:00",
+      "validation_until": "2026-06-12T20:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0012",
+      "test_from": "2026-06-08T13:00:00+00:00",
+      "test_until": "2026-08-30T19:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-20T16:00:00+00:00",
+      "validation_from": "2026-03-21T20:00:00+00:00",
+      "validation_until": "2026-06-08T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0013",
+      "test_from": "2026-06-03T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T03:00:00+00:00",
+      "train_until": "2026-03-08T10:00:00+00:00",
+      "validation_from": "2026-03-09T12:00:00+00:00",
+      "validation_until": "2026-06-02T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0014",
+      "test_from": "2026-06-13T03:00:00+00:00",
+      "test_until": "2026-08-31T10:00:00+00:00",
+      "train_from": "2025-03-02T16:00:00+00:00",
+      "train_until": "2026-03-24T15:00:00+00:00",
+      "validation_from": "2026-03-24T21:00:00+00:00",
+      "validation_until": "2026-06-12T11:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0015",
+      "test_from": "2026-06-08T20:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-21T18:00:00+00:00",
+      "validation_from": "2026-03-22T17:00:00+00:00",
+      "validation_until": "2026-06-08T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0016",
+      "test_from": "2026-06-15T03:00:00+00:00",
+      "test_until": "2026-08-31T17:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-20T21:00:00+00:00",
+      "validation_from": "2026-03-22T12:00:00+00:00",
+      "validation_until": "2026-06-13T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0017",
+      "test_from": "2026-06-12T18:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-24T16:00:00+00:00",
+      "validation_from": "2026-03-24T17:00:00+00:00",
+      "validation_until": "2026-06-12T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0018",
+      "test_from": "2026-06-08T18:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T03:00:00+00:00",
+      "train_until": "2026-03-19T12:00:00+00:00",
+      "validation_from": "2026-03-20T14:00:00+00:00",
+      "validation_until": "2026-06-08T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0019",
+      "test_from": "2026-06-15T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-28T21:00:00+00:00",
+      "validation_from": "2026-03-29T08:00:00+00:00",
+      "validation_until": "2026-06-15T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0020",
+      "test_from": "2026-06-12T18:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T18:00:00+00:00",
+      "train_until": "2026-03-14T22:00:00+00:00",
+      "validation_from": "2026-03-15T12:00:00+00:00",
+      "validation_until": "2026-06-11T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0021",
+      "test_from": "2026-06-14T10:00:00+00:00",
+      "test_until": "2026-08-30T11:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-09T20:00:00+00:00",
+      "validation_from": "2026-03-10T14:00:00+00:00",
+      "validation_until": "2026-06-14T03:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0022",
+      "test_from": "2026-06-20T09:00:00+00:00",
+      "test_until": "2026-08-31T13:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-04-01T03:00:00+00:00",
+      "validation_from": "2026-04-01T18:00:00+00:00",
+      "validation_until": "2026-06-19T21:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0023",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-23T07:00:00+00:00",
+      "validation_from": "2026-03-24T18:00:00+00:00",
+      "validation_until": "2026-06-11T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0024",
+      "test_from": "2026-06-09T17:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T20:00:00+00:00",
+      "train_until": "2026-03-14T20:00:00+00:00",
+      "validation_from": "2026-03-15T09:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0025",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T16:00:00+00:00",
+      "train_until": "2026-03-14T03:00:00+00:00",
+      "validation_from": "2026-03-14T22:00:00+00:00",
+      "validation_until": "2026-06-07T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0026",
+      "test_from": "2026-06-19T19:00:00+00:00",
+      "test_until": "2026-08-31T16:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-30T07:00:00+00:00",
+      "validation_from": "2026-04-01T08:00:00+00:00",
+      "validation_until": "2026-06-18T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0027",
+      "test_from": "2026-06-09T11:00:00+00:00",
+      "test_until": "2026-08-31T10:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-18T19:00:00+00:00",
+      "validation_from": "2026-03-20T09:00:00+00:00",
+      "validation_until": "2026-06-08T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0028",
+      "test_from": "2026-06-15T09:00:00+00:00",
+      "test_until": "2026-08-31T12:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-21T22:00:00+00:00",
+      "validation_from": "2026-03-22T11:00:00+00:00",
+      "validation_until": "2026-06-15T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0029",
+      "test_from": "2026-06-11T19:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-26T07:00:00+00:00",
+      "validation_from": "2026-03-26T15:00:00+00:00",
+      "validation_until": "2026-06-10T20:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0030",
+      "test_from": "2026-06-17T12:00:00+00:00",
+      "test_until": "2026-08-31T16:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-21T15:00:00+00:00",
+      "validation_from": "2026-03-23T07:00:00+00:00",
+      "validation_until": "2026-06-15T22:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0031",
+      "test_from": "2026-06-07T15:00:00+00:00",
+      "test_until": "2026-08-31T19:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-26T22:00:00+00:00",
+      "validation_from": "2026-03-27T03:00:00+00:00",
+      "validation_until": "2026-06-06T22:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0032",
+      "test_from": "2026-06-10T16:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-23T07:00:00+00:00",
+      "validation_from": "2026-03-23T10:00:00+00:00",
+      "validation_until": "2026-06-09T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0033",
+      "test_from": "2026-06-15T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-23T11:00:00+00:00",
+      "validation_from": "2026-03-23T12:00:00+00:00",
+      "validation_until": "2026-06-14T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0034",
+      "test_from": "2026-06-07T22:00:00+00:00",
+      "test_until": "2026-08-31T09:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-17T11:00:00+00:00",
+      "validation_from": "2026-03-18T15:00:00+00:00",
+      "validation_until": "2026-06-07T03:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0035",
+      "test_from": "2026-06-10T15:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-20T14:00:00+00:00",
+      "validation_from": "2026-03-22T20:00:00+00:00",
+      "validation_until": "2026-06-08T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0036",
+      "test_from": "2026-06-07T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T20:00:00+00:00",
+      "train_until": "2026-03-12T06:00:00+00:00",
+      "validation_from": "2026-03-12T16:00:00+00:00",
+      "validation_until": "2026-06-05T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0037",
+      "test_from": "2026-06-02T13:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T18:00:00+00:00",
+      "train_until": "2026-03-12T15:00:00+00:00",
+      "validation_from": "2026-03-13T16:00:00+00:00",
+      "validation_until": "2026-06-01T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0038",
+      "test_from": "2026-06-09T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-28T16:00:00+00:00",
+      "validation_from": "2026-03-29T09:00:00+00:00",
+      "validation_until": "2026-06-08T21:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0039",
+      "test_from": "2026-06-11T17:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-21T15:00:00+00:00",
+      "validation_from": "2026-03-21T21:00:00+00:00",
+      "validation_until": "2026-06-10T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0040",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-29T19:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-19T16:00:00+00:00",
+      "validation_from": "2026-03-21T09:00:00+00:00",
+      "validation_until": "2026-06-11T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0041",
+      "test_from": "2026-06-04T16:00:00+00:00",
+      "test_until": "2026-08-31T14:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-14T09:00:00+00:00",
+      "validation_from": "2026-03-15T12:00:00+00:00",
+      "validation_until": "2026-06-04T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0042",
+      "test_from": "2026-06-03T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T21:00:00+00:00",
+      "train_until": "2026-03-14T03:00:00+00:00",
+      "validation_from": "2026-03-14T13:00:00+00:00",
+      "validation_until": "2026-06-01T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0043",
+      "test_from": "2026-06-07T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-13T14:00:00+00:00",
+      "validation_from": "2026-03-14T12:00:00+00:00",
+      "validation_until": "2026-06-05T20:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0044",
+      "test_from": "2026-06-07T17:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-16T07:00:00+00:00",
+      "validation_from": "2026-03-17T13:00:00+00:00",
+      "validation_until": "2026-06-06T22:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0045",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T21:00:00+00:00",
+      "train_until": "2026-03-13T08:00:00+00:00",
+      "validation_from": "2026-03-14T22:00:00+00:00",
+      "validation_until": "2026-06-06T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0046",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T17:00:00+00:00",
+      "train_from": "2025-03-02T21:00:00+00:00",
+      "train_until": "2026-03-16T07:00:00+00:00",
+      "validation_from": "2026-03-16T08:00:00+00:00",
+      "validation_until": "2026-06-07T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0047",
+      "test_from": "2026-06-03T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-14T09:00:00+00:00",
+      "validation_from": "2026-03-14T19:00:00+00:00",
+      "validation_until": "2026-06-03T03:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0048",
+      "test_from": "2026-06-07T08:00:00+00:00",
+      "test_until": "2026-08-31T13:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-16T20:00:00+00:00",
+      "validation_from": "2026-03-18T09:00:00+00:00",
+      "validation_until": "2026-06-05T20:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0049",
+      "test_from": "2026-06-07T22:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-15T09:00:00+00:00",
+      "validation_from": "2026-03-16T07:00:00+00:00",
+      "validation_until": "2026-06-07T11:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0050",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T17:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-19T22:00:00+00:00",
+      "validation_from": "2026-03-20T22:00:00+00:00",
+      "validation_until": "2026-06-07T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0051",
+      "test_from": "2026-06-04T20:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T21:00:00+00:00",
+      "train_until": "2026-03-17T18:00:00+00:00",
+      "validation_from": "2026-03-18T15:00:00+00:00",
+      "validation_until": "2026-06-04T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0052",
+      "test_from": "2026-06-05T14:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-12T09:00:00+00:00",
+      "validation_from": "2026-03-15T09:00:00+00:00",
+      "validation_until": "2026-06-03T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0053",
+      "test_from": "2026-06-15T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-26T09:00:00+00:00",
+      "validation_from": "2026-03-26T12:00:00+00:00",
+      "validation_until": "2026-06-14T21:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0054",
+      "test_from": "2026-06-08T18:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T15:00:00+00:00",
+      "train_until": "2026-03-15T09:00:00+00:00",
+      "validation_from": "2026-03-15T21:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0055",
+      "test_from": "2026-06-10T19:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-22T15:00:00+00:00",
+      "validation_from": "2026-03-23T07:00:00+00:00",
+      "validation_until": "2026-06-08T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0056",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T19:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-12T07:00:00+00:00",
+      "validation_from": "2026-03-13T03:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0057",
+      "test_from": "2026-06-03T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-14T10:00:00+00:00",
+      "validation_from": "2026-03-15T07:00:00+00:00",
+      "validation_until": "2026-06-03T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0058",
+      "test_from": "2026-06-14T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-30T07:00:00+00:00",
+      "validation_from": "2026-03-31T09:00:00+00:00",
+      "validation_until": "2026-06-13T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0059",
+      "test_from": "2026-06-06T12:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T18:00:00+00:00",
+      "train_until": "2026-03-14T11:00:00+00:00",
+      "validation_from": "2026-03-14T21:00:00+00:00",
+      "validation_until": "2026-06-03T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0060",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-20T22:00:00+00:00",
+      "validation_from": "2026-03-21T19:00:00+00:00",
+      "validation_until": "2026-06-11T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0061",
+      "test_from": "2026-06-19T08:00:00+00:00",
+      "test_until": "2026-08-31T15:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-30T08:00:00+00:00",
+      "validation_from": "2026-03-31T10:00:00+00:00",
+      "validation_until": "2026-06-17T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0062",
+      "test_from": "2026-06-12T19:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-23T07:00:00+00:00",
+      "validation_from": "2026-03-23T19:00:00+00:00",
+      "validation_until": "2026-06-12T06:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0063",
+      "test_from": "2026-06-09T21:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-16T17:00:00+00:00",
+      "validation_from": "2026-03-17T09:00:00+00:00",
+      "validation_until": "2026-06-08T22:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0064",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T11:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-21T11:00:00+00:00",
+      "validation_from": "2026-03-22T18:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0065",
+      "test_from": "2026-06-13T20:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-26T09:00:00+00:00",
+      "validation_from": "2026-03-26T17:00:00+00:00",
+      "validation_until": "2026-06-12T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0066",
+      "test_from": "2026-06-15T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-25T08:00:00+00:00",
+      "validation_from": "2026-03-26T09:00:00+00:00",
+      "validation_until": "2026-06-15T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0067",
+      "test_from": "2026-06-11T15:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-22T20:00:00+00:00",
+      "validation_from": "2026-03-23T11:00:00+00:00",
+      "validation_until": "2026-06-10T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0068",
+      "test_from": "2026-06-15T07:00:00+00:00",
+      "test_until": "2026-08-31T12:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-21T21:00:00+00:00",
+      "validation_from": "2026-03-22T11:00:00+00:00",
+      "validation_until": "2026-06-13T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0069",
+      "test_from": "2026-06-11T14:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T16:00:00+00:00",
+      "train_until": "2026-03-21T22:00:00+00:00",
+      "validation_from": "2026-03-22T03:00:00+00:00",
+      "validation_until": "2026-06-10T12:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0070",
+      "test_from": "2026-06-14T13:00:00+00:00",
+      "test_until": "2026-08-31T16:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-28T07:00:00+00:00",
+      "validation_from": "2026-03-29T10:00:00+00:00",
+      "validation_until": "2026-06-13T12:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0071",
+      "test_from": "2026-06-14T22:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T16:00:00+00:00",
+      "train_until": "2026-03-25T12:00:00+00:00",
+      "validation_from": "2026-03-25T19:00:00+00:00",
+      "validation_until": "2026-06-13T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0072",
+      "test_from": "2026-06-07T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T15:00:00+00:00",
+      "train_until": "2026-03-14T10:00:00+00:00",
+      "validation_from": "2026-03-14T18:00:00+00:00",
+      "validation_until": "2026-06-06T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0073",
+      "test_from": "2026-06-08T08:00:00+00:00",
+      "test_until": "2026-08-31T13:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-16T18:00:00+00:00",
+      "validation_from": "2026-03-18T08:00:00+00:00",
+      "validation_until": "2026-06-08T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0074",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-31T13:00:00+00:00",
+      "train_from": "2025-03-02T22:00:00+00:00",
+      "train_until": "2026-03-12T06:00:00+00:00",
+      "validation_from": "2026-03-13T18:00:00+00:00",
+      "validation_until": "2026-06-07T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0075",
+      "test_from": "2026-06-14T16:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-12T12:00:00+00:00",
+      "validation_from": "2026-03-14T12:00:00+00:00",
+      "validation_until": "2026-06-12T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0076",
+      "test_from": "2026-06-15T07:00:00+00:00",
+      "test_until": "2026-08-31T19:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-24T13:00:00+00:00",
+      "validation_from": "2026-03-26T14:00:00+00:00",
+      "validation_until": "2026-06-14T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0077",
+      "test_from": "2026-06-04T19:00:00+00:00",
+      "test_until": "2026-08-31T13:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-14T15:00:00+00:00",
+      "validation_from": "2026-03-14T20:00:00+00:00",
+      "validation_until": "2026-06-03T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0078",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-25T17:00:00+00:00",
+      "validation_from": "2026-03-27T14:00:00+00:00",
+      "validation_until": "2026-06-11T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0079",
+      "test_from": "2026-06-11T13:00:00+00:00",
+      "test_until": "2026-08-31T09:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-20T21:00:00+00:00",
+      "validation_from": "2026-03-21T22:00:00+00:00",
+      "validation_until": "2026-06-11T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0080",
+      "test_from": "2026-06-03T17:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-14T22:00:00+00:00",
+      "validation_from": "2026-03-15T10:00:00+00:00",
+      "validation_until": "2026-06-03T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0081",
+      "test_from": "2026-06-09T17:00:00+00:00",
+      "test_until": "2026-08-31T08:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-15T09:00:00+00:00",
+      "validation_from": "2026-03-16T15:00:00+00:00",
+      "validation_until": "2026-06-08T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0082",
+      "test_from": "2026-06-15T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-15T03:00:00+00:00",
+      "validation_from": "2026-03-15T09:00:00+00:00",
+      "validation_until": "2026-06-15T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0083",
+      "test_from": "2026-06-18T22:00:00+00:00",
+      "test_until": "2026-08-31T08:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-26T15:00:00+00:00",
+      "validation_from": "2026-03-27T16:00:00+00:00",
+      "validation_until": "2026-06-18T20:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0084",
+      "test_from": "2026-06-11T11:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T22:00:00+00:00",
+      "train_until": "2026-03-17T14:00:00+00:00",
+      "validation_from": "2026-03-19T11:00:00+00:00",
+      "validation_until": "2026-06-11T10:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0085",
+      "test_from": "2026-06-10T18:00:00+00:00",
+      "test_until": "2026-08-31T12:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-22T21:00:00+00:00",
+      "validation_from": "2026-03-23T15:00:00+00:00",
+      "validation_until": "2026-06-10T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0086",
+      "test_from": "2026-06-12T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T10:00:00+00:00",
+      "train_until": "2026-03-24T08:00:00+00:00",
+      "validation_from": "2026-03-24T13:00:00+00:00",
+      "validation_until": "2026-06-11T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0087",
+      "test_from": "2026-06-15T12:00:00+00:00",
+      "test_until": "2026-08-31T12:00:00+00:00",
+      "train_from": "2025-03-02T17:00:00+00:00",
+      "train_until": "2026-03-25T11:00:00+00:00",
+      "validation_from": "2026-03-26T11:00:00+00:00",
+      "validation_until": "2026-06-15T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0088",
+      "test_from": "2026-05-31T14:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-15T09:00:00+00:00",
+      "validation_from": "2026-03-15T11:00:00+00:00",
+      "validation_until": "2026-05-30T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0089",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-17T09:00:00+00:00",
+      "validation_from": "2026-03-18T08:00:00+00:00",
+      "validation_until": "2026-06-07T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0090",
+      "test_from": "2026-06-07T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-15T19:00:00+00:00",
+      "validation_from": "2026-03-17T08:00:00+00:00",
+      "validation_until": "2026-06-04T11:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0091",
+      "test_from": "2026-06-15T17:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T19:00:00+00:00",
+      "train_until": "2026-03-28T22:00:00+00:00",
+      "validation_from": "2026-03-29T10:00:00+00:00",
+      "validation_until": "2026-06-15T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0092",
+      "test_from": "2026-06-14T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-16T21:00:00+00:00",
+      "validation_from": "2026-03-18T12:00:00+00:00",
+      "validation_until": "2026-06-11T11:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0093",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T09:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-23T21:00:00+00:00",
+      "validation_from": "2026-03-25T08:00:00+00:00",
+      "validation_until": "2026-06-07T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0094",
+      "test_from": "2026-06-20T08:00:00+00:00",
+      "test_until": "2026-08-31T17:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-31T11:00:00+00:00",
+      "validation_from": "2026-04-01T09:00:00+00:00",
+      "validation_until": "2026-06-18T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0095",
+      "test_from": "2026-06-12T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-16T09:00:00+00:00",
+      "validation_from": "2026-03-16T19:00:00+00:00",
+      "validation_until": "2026-06-12T06:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0096",
+      "test_from": "2026-06-18T07:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T15:00:00+00:00",
+      "train_until": "2026-03-21T17:00:00+00:00",
+      "validation_from": "2026-03-23T07:00:00+00:00",
+      "validation_until": "2026-06-17T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0097",
+      "test_from": "2026-06-03T08:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-11T19:00:00+00:00",
+      "validation_from": "2026-03-12T14:00:00+00:00",
+      "validation_until": "2026-06-03T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0098",
+      "test_from": "2026-06-09T12:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-23T16:00:00+00:00",
+      "validation_from": "2026-03-23T22:00:00+00:00",
+      "validation_until": "2026-06-08T21:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0099",
+      "test_from": "2026-06-14T02:06:00+00:00",
+      "test_until": "2026-08-30T22:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-30T07:00:00+00:00",
+      "validation_from": "2026-03-30T10:00:00+00:00",
+      "validation_until": "2026-06-14T02:03:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0100",
+      "test_from": "2026-06-08T07:00:00+00:00",
+      "test_until": "2026-08-30T17:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-12T06:00:00+00:00",
+      "validation_from": "2026-03-12T12:00:00+00:00",
+      "validation_until": "2026-06-06T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0101",
+      "test_from": "2026-06-05T16:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T18:00:00+00:00",
+      "train_until": "2026-03-10T10:00:00+00:00",
+      "validation_from": "2026-03-10T21:00:00+00:00",
+      "validation_until": "2026-06-04T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0102",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-16T15:00:00+00:00",
+      "validation_from": "2026-03-16T16:00:00+00:00",
+      "validation_until": "2026-06-07T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0103",
+      "test_from": "2026-06-05T22:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T15:00:00+00:00",
+      "train_until": "2026-03-20T19:00:00+00:00",
+      "validation_from": "2026-03-21T22:00:00+00:00",
+      "validation_until": "2026-06-05T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0104",
+      "test_from": "2026-06-04T15:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-18T09:00:00+00:00",
+      "validation_from": "2026-03-19T20:00:00+00:00",
+      "validation_until": "2026-06-04T07:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0105",
+      "test_from": "2026-06-06T12:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T09:00:00+00:00",
+      "train_until": "2026-03-17T20:00:00+00:00",
+      "validation_from": "2026-03-20T19:00:00+00:00",
+      "validation_until": "2026-06-04T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0106",
+      "test_from": "2026-06-06T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-13T19:00:00+00:00",
+      "validation_from": "2026-03-14T07:00:00+00:00",
+      "validation_until": "2026-06-06T08:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0107",
+      "test_from": "2026-06-13T11:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-22T13:00:00+00:00",
+      "validation_from": "2026-03-23T07:00:00+00:00",
+      "validation_until": "2026-06-12T19:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0108",
+      "test_from": "2026-06-02T22:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-16T07:00:00+00:00",
+      "validation_from": "2026-03-16T21:00:00+00:00",
+      "validation_until": "2026-06-01T16:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0109",
+      "test_from": "2026-06-12T08:00:00+00:00",
+      "test_until": "2026-08-31T11:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-23T18:00:00+00:00",
+      "validation_from": "2026-03-25T22:00:00+00:00",
+      "validation_until": "2026-06-11T14:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0110",
+      "test_from": "2026-06-12T06:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T22:00:00+00:00",
+      "train_until": "2026-03-12T13:00:00+00:00",
+      "validation_from": "2026-03-13T12:00:00+00:00",
+      "validation_until": "2026-06-11T18:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0111",
+      "test_from": "2026-06-17T08:00:00+00:00",
+      "test_until": "2026-08-31T11:00:00+00:00",
+      "train_from": "2025-03-02T14:00:00+00:00",
+      "train_until": "2026-03-21T17:00:00+00:00",
+      "validation_from": "2026-03-23T17:00:00+00:00",
+      "validation_until": "2026-06-15T13:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0112",
+      "test_from": "2026-06-12T18:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T13:00:00+00:00",
+      "train_until": "2026-03-27T09:00:00+00:00",
+      "validation_from": "2026-03-27T13:00:00+00:00",
+      "validation_until": "2026-06-12T06:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0113",
+      "test_from": "2026-06-08T10:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T11:00:00+00:00",
+      "train_until": "2026-03-17T13:00:00+00:00",
+      "validation_from": "2026-03-18T18:00:00+00:00",
+      "validation_until": "2026-06-07T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0114",
+      "test_from": "2026-06-13T17:00:00+00:00",
+      "test_until": "2026-08-31T15:00:00+00:00",
+      "train_from": "2025-03-02T08:00:00+00:00",
+      "train_until": "2026-03-23T07:00:00+00:00",
+      "validation_from": "2026-03-23T14:00:00+00:00",
+      "validation_until": "2026-06-13T17:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0115",
+      "test_from": "2026-06-15T16:00:00+00:00",
+      "test_until": "2026-08-31T08:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-27T10:00:00+00:00",
+      "validation_from": "2026-03-28T13:00:00+00:00",
+      "validation_until": "2026-06-15T09:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0116",
+      "test_from": "2026-06-07T19:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T03:00:00+00:00",
+      "train_until": "2026-03-23T07:00:00+00:00",
+      "validation_from": "2026-03-23T17:00:00+00:00",
+      "validation_until": "2026-06-06T21:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0117",
+      "test_from": "2026-06-09T15:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-02T07:00:00+00:00",
+      "train_until": "2026-03-20T12:00:00+00:00",
+      "validation_from": "2026-03-21T11:00:00+00:00",
+      "validation_until": "2026-06-08T15:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0118",
+      "test_from": "2026-06-04T09:00:00+00:00",
+      "test_until": "2026-08-31T07:00:00+00:00",
+      "train_from": "2025-03-03T07:00:00+00:00",
+      "train_until": "2026-03-13T15:00:00+00:00",
+      "validation_from": "2026-03-15T09:00:00+00:00",
+      "validation_until": "2026-06-03T12:00:00+00:00"
+    },
+    {
+      "profile_id": "syn-profile-0119",
+      "test_from": "2026-06-06T03:00:00+00:00",
+      "test_until": "2026-08-31T17:00:00+00:00",
+      "train_from": "2025-03-02T12:00:00+00:00",
+      "train_until": "2026-03-21T09:00:00+00:00",
+      "validation_from": "2026-03-22T08:00:00+00:00",
+      "validation_until": "2026-06-05T16:00:00+00:00"
+    }
+  ],
+  "profiles": 120,
+  "temporal_split": "per-profile chronological 70/15/15"
+}

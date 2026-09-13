@@ -4,6 +4,8 @@ __pycache__/
 .env
 .venv/
 .uv-venv/
+.uv-venv312/
+.uv-python/
 .uv-cache/
 .pytest_cache/
 .mypy_cache/
@@ -12,5 +14,7 @@ __pycache__/
 htmlcov/
 build/
 dist/
-artifacts/
+artifacts-smoke/
+data/generated-smoke/
+data/generated/
 .vercel/

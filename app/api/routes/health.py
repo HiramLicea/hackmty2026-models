@@ -2,7 +2,7 @@
 
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response, status
 from pydantic import BaseModel, ConfigDict
 
 from app import __version__
@@ -16,6 +16,7 @@ from app.models.operational import (
     ReadinessConfiguration,
     ReadinessResponse,
 )
+from app.services import INFERENCE_IMPLEMENTED
 
 router = APIRouter(tags=["health"])
 
@@ -32,32 +33,44 @@ class HealthResponse(BaseModel):
 
 @router.get("/health", response_model=HealthResponse)
 async def health() -> HealthResponse:
-    """Report process liveness without requiring Supabase."""
+    """Report process liveness without loading artifacts or calling external systems."""
     return HealthResponse()
 
 
 @router.get("/ready", response_model=ReadinessResponse)
 async def ready(
+    response: Response,
     settings: Annotated[Settings, Depends(get_settings)],
     artifacts: Annotated[ArtifactStore, Depends(get_artifact_store)],
 ) -> ReadinessResponse:
     """Report configuration and file availability without testing external connectivity."""
     artifact_status = artifacts.inspect()
-    key = settings.supabase_service_role_key
     configuration = ReadinessConfiguration(
-        mcp_api_key=bool(settings.mcp_api_key and settings.mcp_api_key.get_secret_value()),
-        supabase=bool(settings.supabase_url and key and key.get_secret_value()),
+        inference_api_key=bool(
+            settings.inference_api_key and settings.inference_api_key.get_secret_value()
+        ),
+    )
+    loadable = (
+        artifacts.check_loadable() if artifact_status.ready else dict.fromkeys(MODEL_NAMES, False)
     )
     artifact_checks = ReadinessArtifacts(
         manifest=artifact_status.manifest_valid,
         models={name: artifact_status.models.get(name, False) for name in MODEL_NAMES},
+        loadable={name: loadable.get(name, False) for name in MODEL_NAMES},
     )
-    is_ready = configuration.mcp_api_key and configuration.supabase and artifact_status.ready
+    is_ready = (
+        configuration.inference_api_key
+        and artifact_status.ready
+        and all(loadable.values())
+        and INFERENCE_IMPLEMENTED
+    )
+    response.status_code = status.HTTP_200_OK if is_ready else status.HTTP_503_SERVICE_UNAVAILABLE
     return ReadinessResponse(
         ready=is_ready,
         status="ready" if is_ready else "not_ready",
         checks=ReadinessChecks(
             configuration=configuration,
             artifacts=artifact_checks,
+            inference_implemented=INFERENCE_IMPLEMENTED,
         ),
     )

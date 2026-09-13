@@ -1,0 +1,8 @@
+{
+  "residual_p10_days": -52.644399,
+  "residual_p90_days": 152.401304,
+  "residual_std_days": 92.129166,
+  "samples": 1000,
+  "schema_version": "1",
+  "seed_offset": 31
+}

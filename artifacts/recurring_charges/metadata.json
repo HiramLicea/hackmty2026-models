@@ -1,0 +1,10 @@
+{
+  "candidate_configurations": 12,
+  "mean_expected_amount_error": 32.6677,
+  "mean_next_date_error_days": 8.883,
+  "method": "merchant normalization + median interval/MAD",
+  "temporal_split": "per-profile chronological 70/15/15",
+  "validation_f1": 0.6971,
+  "validation_precision": 1.0,
+  "validation_recall": 0.535
+}

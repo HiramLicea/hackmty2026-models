@@ -6,18 +6,19 @@ from app.models.common import ModelName, StrictModel
 
 
 class ReadinessConfiguration(StrictModel):
-    mcp_api_key: bool
-    supabase: bool
+    inference_api_key: bool
 
 
 class ReadinessArtifacts(StrictModel):
     manifest: bool
     models: dict[ModelName, bool]
+    loadable: dict[ModelName, bool]
 
 
 class ReadinessChecks(StrictModel):
     configuration: ReadinessConfiguration
     artifacts: ReadinessArtifacts
+    inference_implemented: bool
 
 
 class ReadinessResponse(StrictModel):

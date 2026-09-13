@@ -3,10 +3,10 @@
 import json
 import os
 import sys
+from datetime import UTC, datetime
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-
-EXAMPLE_USER_ID = "c1a3797d-b335-5a9d-98a1-402311f82c7a"
+from uuid import uuid4
 
 
 def request_json(url: str, *, api_key: str | None = None) -> tuple[int, dict[str, object]]:
@@ -18,7 +18,15 @@ def request_json(url: str, *, api_key: str | None = None) -> tuple[int, dict[str
         method = "POST"
         headers["Authorization"] = f"Bearer {api_key}"
         headers["Content-Type"] = "application/json"
-        data = json.dumps({"user_id": EXAMPLE_USER_ID}).encode()
+        data = json.dumps(
+            {
+                "request_id": str(uuid4()),
+                "as_of": datetime.now(UTC).isoformat(),
+                "currency": "MXN",
+                "historical_transactions": [],
+                "candidate_transactions": [],
+            }
+        ).encode()
     request = Request(url, data=data, headers=headers, method=method)
     try:
         with urlopen(request, timeout=30) as response:  # noqa: S310 - operator-provided URL
@@ -30,9 +38,9 @@ def request_json(url: str, *, api_key: str | None = None) -> tuple[int, dict[str
 def main() -> int:
     """Check public operations and verify that the protected route accepts authentication."""
     base_url = os.getenv("MODELS_API_URL", "").rstrip("/")
-    api_key = os.getenv("MCP_API_KEY", "")
+    api_key = os.getenv("INFERENCE_API_KEY", "")
     if not base_url or not api_key:
-        print("MODELS_API_URL and MCP_API_KEY are required", file=sys.stderr)
+        print("MODELS_API_URL and INFERENCE_API_KEY are required", file=sys.stderr)
         return 2
 
     try:
@@ -43,12 +51,17 @@ def main() -> int:
             api_key=api_key,
         )
     except (URLError, TimeoutError, ValueError, json.JSONDecodeError) as error:
-        print(f"Smoke test could not reach a valid JSON API: {type(error).__name__}", file=sys.stderr)
+        print(
+            f"Smoke test could not reach a valid JSON API: {type(error).__name__}", file=sys.stderr
+        )
         return 1
 
     prediction_code = prediction_body.get("error", {})
     error_code = prediction_code.get("code") if isinstance(prediction_code, dict) else None
-    auth_accepted = prediction_status != 401 and error_code != "INVALID_API_KEY"
+    auth_accepted = prediction_status in {200, 503} and error_code not in {
+        "INVALID_API_KEY",
+        "SERVICE_NOT_CONFIGURED",
+    }
     print(f"health: HTTP {health_status}")
     print(f"ready: HTTP {ready_status}, ready={ready_body.get('ready')}")
     print(f"authenticated prediction: HTTP {prediction_status}, auth_accepted={auth_accepted}")

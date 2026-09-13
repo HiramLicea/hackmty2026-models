@@ -1,85 +1,128 @@
 # Contratos de predicción
 
-## Metadatos comunes
+## Reglas comunes
 
-Todas las respuestas futuras extienden `CommonPredictionResponse`:
+Todos los requests incluyen:
 
 ```json
 {
-  "model_name": "forecast_cash_balance",
-  "model_version": "0.1.0",
-  "user_id": "c1a3797d-b335-5a9d-98a1-402311f82c7a",
-  "generated_at": "2026-09-12T18:00:00Z",
-  "trained_until": "2026-09-11T23:59:59Z",
-  "confidence": 0.82,
-  "summary": {},
-  "series": [],
-  "drivers": [],
-  "limitations": [],
-  "visualization_hint": {
-    "type": "area_chart",
-    "x_field": "date",
-    "y_fields": ["expected", "lower_bound", "upper_bound"]
-  }
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "as_of": "2026-09-13T00:00:00Z",
+  "currency": "MXN"
 }
 ```
 
-- Fechas y datetimes usan ISO-8601; los datetimes deben incluir zona horaria y se normalizan a UTC.
-- `confidence` está entre 0 y 1 y describe confianza calibrada del resultado, no una garantía.
-- `drivers` ofrece factores explicables con impacto firmado y detalles JSON opcionales.
-- `limitations` hace visibles escasez de historia, datos faltantes y supuestos.
-- `visualization_hint` es una recomendación semántica. El agente decide el árbol A2UI final.
-- Tipos permitidos: `area_chart`, `line_chart`, `progress`, `transaction_list`, `anomaly_list` y
-  `summary_card`.
+- `request_id` es un UUID de correlación, no una identidad.
+- `as_of` requiere zona horaria y se normaliza a UTC.
+- `currency` es un código de tres letras normalizado a mayúsculas.
+- Los campos desconocidos y números no finitos se rechazan.
+- Cada request admite como máximo 10 000 registros sumando todas sus colecciones.
+- La historia debe estar ordenada ascendentemente y no puede ser posterior a `as_of`.
 
-## Solicitudes comunes
+Una transacción normalizada contiene `transaction_id` opaco, `amount > 0`, `direction` (`debit` o
+`credit`), `category`, `merchant` opcional y `occurred_at` con zona. El monto firmado se deriva como
+`credit = +amount` y `debit = -amount`.
 
-Todas incluyen `user_id` (UUID) y `as_of` opcional. `user_id` debe haber sido verificado por el
-caller interno. `as_of` permite backtesting reproducible y nunca debe ocasionar lectura de datos
-posteriores a esa fecha.
+Un flujo programado contiene `cash_flow_id` opaco, `name`, `amount > 0`, `direction` (`income` o
+`expense`) y `scheduled_date`. Su signo es `income = +amount`, `expense = -amount`.
 
-## `forecast_cash_balance`
+## Cash balance
 
-Entrada: `account_id`, `horizon_days` (`7`, `15` o `30`) y metadatos comunes.
+`POST /v1/predictions/cash-balance`
 
-Resumen: saldo inicial, saldo final esperado, mínimo esperado, moneda e ingresos/egresos programados.
-La serie diaria contiene `expected`, `lower_bound` y `upper_bound`. Los límites deben respetar
-`lower_bound <= expected <= upper_bound`.
+```json
+{
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "as_of": "2026-09-13T00:00:00Z",
+  "currency": "MXN",
+  "current_balance": 15420.75,
+  "horizon_days": 30,
+  "transactions": [],
+  "scheduled_cash_flows": []
+}
+```
 
-En una fase posterior, el baseline combinará una serie temporal (SARIMAX cuando los datos lo
-justifiquen) con flujos programados determinísticos.
+`horizon_days` acepta 7, 15 o 30. Las transacciones son historia; los flujos programados no pueden
+ser anteriores a `as_of`.
 
-## `predict_savings_goal`
+## Savings goal
 
-Entrada: `goal_id`, cantidad de simulaciones y metadatos comunes.
+`POST /v1/predictions/savings-goal`
 
-Resumen: monto objetivo, progreso, probabilidad de alcanzar la meta, fecha esperada y aportación
-mensual recomendada. La serie contiene percentiles conservador, esperado y optimista por fecha.
+```json
+{
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "as_of": "2026-09-13T00:00:00Z",
+  "currency": "MXN",
+  "goal": {
+    "goal_id": "goal-opaque-id",
+    "target_amount": 50000,
+    "target_date": "2027-03-01",
+    "current_saved_amount": 18500
+  },
+  "contributions": [],
+  "cash_flow_history": []
+}
+```
 
-La simulación futura usará particiones temporales y una semilla controlable en evaluación.
+Cada contribución admite `contribution_id` opaco opcional, `amount > 0` y `contributed_at`. La fecha
+objetivo no puede ser anterior a `as_of`.
 
-## `forecast_recurring_charges`
+## Recurring charges
 
-Entrada: `account_id` opcional, ventanas de historia/pronóstico y metadatos comunes.
+`POST /v1/predictions/recurring-charges`
 
-Resumen: total de patrones y monto previsto. Cada elemento de serie describe comercio normalizado,
-fecha/monto estimados, periodicidad, confianza y evidencia. Esta capacidad se reportará como método
-estadístico basado en reglas mientras no exista un modelo supervisado.
+```json
+{
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "as_of": "2026-09-13T00:00:00Z",
+  "currency": "MXN",
+  "forecast_days": 30,
+  "transactions": []
+}
+```
 
-## `detect_transaction_anomalies`
+`forecast_days` acepta entre 7 y 365 días.
 
-Entrada: `account_id` opcional, ventana histórica, contaminación y metadatos comunes.
+## Anomalies
 
-Resumen: transacciones analizadas y anomalías detectadas. Cada elemento contiene identificador,
-fecha, monto firmado, score, severidad y razones explicables.
+`POST /v1/predictions/anomalies`
 
-Isolation Forest será una señal inicial, complementada con reglas sobre monto, horario, categoría,
-comercio, frecuencia y desviación histórica. Un resultado es una alerta para revisión, no una
-afirmación de fraude.
+```json
+{
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "as_of": "2026-09-13T00:00:00Z",
+  "currency": "MXN",
+  "historical_transactions": [],
+  "candidate_transactions": []
+}
+```
 
-## Versionado
+Ambas colecciones deben estar ordenadas. Las candidatas no pueden preceder al último elemento de la
+historia ni ser posteriores a `as_of`.
 
-`model_version` versiona el comportamiento predictivo y sus artefactos. Los cambios incompatibles
-del contrato HTTP requerirán además una nueva versión de ruta cuando se publiquen endpoints de
-predicción. En esta fase no se publican esas rutas.
+## Respuesta común
 
+```json
+{
+  "request_id": "25c00a42-822b-49a7-9c50-0fe913242977",
+  "model_name": "forecast_cash_balance",
+  "model_version": "0.1.0",
+  "trained_until": "2026-08-31T23:59:59Z",
+  "generated_at": "2026-09-13T00:00:01Z",
+  "confidence": 0.84,
+  "summary": {},
+  "series": [],
+  "items": [],
+  "drivers": [],
+  "limitations": []
+}
+```
+
+En saldo, `lower_bound`, `expected` y `upper_bound` son p10, p50 y p90 ordenados; los flujos
+programados se suman exactamente en la fecha indicada. En metas, el summary incluye fechas de
+finalizacion conservadora, esperada y optimista, ademas de probabilidad Monte Carlo. En
+recurrencias y anomalias, `items` contiene evidencia y razones explicables.
+
+Los resultados contienen exclusivamente predicción, intervalos, scores, identificadores opacos,
+explicaciones, limitaciones y metadatos del modelo. La presentación corresponde al consumidor.

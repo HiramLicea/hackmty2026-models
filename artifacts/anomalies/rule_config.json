@@ -1,0 +1,8 @@
+{
+  "category_amount_ratio": 5.0,
+  "high_score_threshold": 0.615756115892381,
+  "merchant_amount_ratio": 6.0,
+  "new_merchant_min_amount": 5000.0,
+  "schema_version": "1",
+  "score_threshold": 0.5787143809137489
+}

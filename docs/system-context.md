@@ -1,61 +1,48 @@
-# Contexto del sistema
+# Contexto del motor de inferencia
 
 ## Responsabilidad
 
-`hackmty2026-models` calcula predicciones y devuelve JSON de dominio. No conversa con el usuario, no
-elige componentes concretos, no genera árboles A2UI y no contiene código del frontend.
-
-Flujo objetivo:
+`hackmty2026-models` es un proceso stateless con una única frontera externa: HTTP entrante. Recibe
+datos financieros normalizados, valida sus invariantes, carga pipelines confiables y devuelve JSON de
+dominio. No abre conexiones de red salientes.
 
 ```text
-Expo / React Native
-  -> agente conversacional (autentica y verifica identidad)
-  -> herramientas MCP
+Consumidor confiable
+  -> autentica y autoriza
+  -> obtiene y minimiza datos financieros
+  -> normaliza registros
+  -> HTTPS + Bearer INFERENCE_API_KEY
   -> hackmty2026-models
-  -> Supabase
+  -> pipeline serializado
+  -> resultado financiero estructurado
 ```
 
-La respuesta vuelve por las mismas capas. El agente redacta el texto y transforma el resultado y su
-`visualization_hint` en una superficie A2UI.
+## Límites de confianza
 
-## Hallazgos confirmados en el móvil
+El consumidor externo es responsable de identidad, sesiones, ownership, acceso a bases de datos y
+presentación. El motor no acepta identificadores de usuario, correos, nombres completos, tokens de
+sesión ni credenciales de infraestructura. Los identificadores de transacciones, flujos y metas son
+opacos y sólo sirven para correlacionar entradas con resultados.
 
-La revisión de solo lectura de `HackMTY2026_Mobile` confirmó:
+La autenticación Bearer identifica a un servicio consumidor confiable, no a una persona. El cuerpo
+normalizado sigue siendo no confiable y pasa por contratos Pydantic estrictos.
 
-- Expo SDK 57, React Native 0.86, Expo Router y TypeScript.
-- Supabase JS se configura con variables `EXPO_PUBLIC_*` y una llave pública. En el móvil se utiliza
-  para Auth y edición de metadatos del perfil, no para consultar tablas financieras.
-- Antes de cada consulta, el cliente recupera la sesión, llama `auth.getUser(access_token)`, rechaza
-  usuarios anónimos/no confirmados y comprueba que el UUID verificado coincide con el usuario activo.
-- El móvil envía `POST /api/v1/agent/chat`, cuerpo `{query, user_id}` y el access token en el header
-  `Authorization`. Sólo admite un origen HTTPS para el agente.
-- El transporte de respuesta actual es estricto: `{message, data, a2ui}`. `data` debe ser JSON; el
-  móvil actualmente lo valida pero no lo conserva ni lo presenta.
-- El cliente procesa exclusivamente A2UI `v0.9.1`. Permite los catálogos Basic oficial y Finance
-  v1 propio. Por red, los adaptadores implementados son `Text`, `Button`, `Card`, `Column` y `Chart`;
-  `Chart` admite únicamente `area` y `heatmap`.
-- El móvil nunca resuelve una URI MCP ni se conecta directamente al MCP. El agente resuelve recursos
-  y entrega los mensajes A2UI ordenados.
+## Preprocesamiento e inferencia
 
-## Diferencias frente al contexto inicial
+La frontera HTTP normaliza direcciones, moneda y timestamps, aplica signos y valida orden/cutoff sin
+reordenar ni mutar el request. Entrenamiento e inferencia importan los mismos feature builders; los
+preprocesadores ajustados se serializan y se reutilizan sin volver a ajustarlos.
 
-1. La documentación móvil describe hoy `app -> agente -> MCP -> Supabase`; el servicio de modelos es
-   una extensión nueva entre MCP y Supabase.
-2. Componentes como `Page`, `Grid`, `AccountBalanceCard`, `TransactionList`, `ProgressBar` y otros sí
-   existen o están planeados en la biblioteca local, pero no son actualmente componentes aceptados
-   por el contrato A2UI de red.
-3. El repositorio móvil no contiene DDL, tipos Supabase generados ni consultas a tablas financieras.
-   En consecuencia, no permite verificar nombres de columnas, nulabilidad, claves o relaciones de
-   esas tablas.
-4. Aunque el móvil transmite `user_id`, ese campo por sí solo no autentica. La verificación debe
-   mantenerse en el agente/MCP y este servicio sólo debe ser alcanzable por callers internos de
-   confianza.
+No se entrena durante build, startup o solicitudes. Los artefactos se leen desde un directorio
+controlado, se verifican contra el manifest y se almacenan en caché sólo como optimización de una
+instancia caliente.
 
-## Límites de esta fase
+## Estado actual
 
-- Único endpoint público implementado: `GET /health`.
-- Los cuatro servicios predictivos son placeholders tipados y producen un error explícito si se
-  invocan.
-- No hay cliente Supabase, repositorios de datos, entrenamiento, artefactos joblib, fixtures
-  financieros, A2UI ni herramientas MCP.
+Los cuatro servicios ejecutan inferencia real. Sin manifest compatible, un archivo faltante o un
+hash inválido, las rutas responden `503 MODEL_NOT_READY` y `/ready` responde HTTP 503.
 
+El dataset local es completamente sintético y reproducible. Cada perfil se divide cronológicamente
+70/15/15. La etiqueta sintética de anomalía vive fuera de las transacciones y sólo calcula métricas;
+Isolation Forest se ajusta sin labels. Las limitaciones de generalización se incluyen en el manifest
+y en cada respuesta.

@@ -1,0 +1,7 @@
+{
+  "absolute_tolerance_days": 2.0,
+  "min_confidence": 0.35,
+  "min_observations": 3,
+  "relative_tolerance": 0.2,
+  "schema_version": "1"
+}

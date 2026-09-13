@@ -1,0 +1,12 @@
+{
+  "method": "lowercase, strip punctuation, remove locale/payment/numeric tokens",
+  "removed_tokens": [
+    "mx",
+    "mex",
+    "payment",
+    "pago",
+    "online",
+    "numeric tokens"
+  ],
+  "schema_version": "1"
+}

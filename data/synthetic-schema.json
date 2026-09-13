@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SyntheticFinancialProfile",
+  "type": "object",
+  "required": ["profile_id", "archetype", "currency", "transactions", "scheduled_cash_flows", "savings_goal", "contributions", "evaluation"],
+  "properties": {
+    "profile_id": {"type": "string", "pattern": "^syn-profile-"},
+    "transactions": {"type": "array", "minItems": 300, "maxItems": 600},
+    "evaluation": {
+      "description": "Synthetic ground truth used only by evaluation, never as a model feature.",
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "profile_id": "syn-profile-fixture",
+  "archetype": "salaried_stable",
+  "currency": "MXN",
+  "transactions": [
+    {
+      "transaction_id": "syn-profile-fixture-txn-00001",
+      "amount": 10000.0,
+      "direction": "credit",
+      "category": "income",
+      "merchant": "synthetic employer",
+      "occurred_at": "2026-08-15T09:00:00+00:00"
+    }
+  ],
+  "evaluation": {
+    "anomaly_transaction_ids": [],
+    "recurring_patterns": []
+  }
+}

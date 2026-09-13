@@ -2,18 +2,12 @@
 
 from functools import lru_cache
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated
 
 from fastapi import Depends
-from supabase import create_client
 
 from app.artifacts.store import ArtifactStore
 from app.core.config import Settings, get_settings
-from app.core.errors import DataSourceUnavailableError
-from app.repositories.accounts import (
-    AccountOwnershipRepository,
-    SupabaseAccountOwnershipRepository,
-)
 from app.services import (
     AnomalyDetectionService,
     CashBalanceForecastService,
@@ -36,30 +30,10 @@ def get_artifact_store(settings: Annotated[Settings, Depends(get_settings)]) -> 
     )
 
 
-class UnavailableAccountOwnershipRepository:
-    """Fail closed when server-side Supabase configuration is incomplete."""
-
-    async def require_owned_account(self, user_id: Any, account_id: Any) -> None:
-        del user_id, account_id
-        raise DataSourceUnavailableError("Supabase configuration is unavailable")
-
-
-def get_account_repository(
-    settings: Annotated[Settings, Depends(get_settings)],
-) -> AccountOwnershipRepository:
-    """Create an ownership repository without querying Supabase during startup."""
-    key = settings.supabase_service_role_key
-    if not settings.supabase_url or key is None or not key.get_secret_value():
-        return UnavailableAccountOwnershipRepository()
-    client = create_client(settings.supabase_url, key.get_secret_value())
-    return SupabaseAccountOwnershipRepository(client)
-
-
 def get_cash_balance_service(
     artifacts: Annotated[ArtifactStore, Depends(get_artifact_store)],
-    accounts: Annotated[AccountOwnershipRepository, Depends(get_account_repository)],
 ) -> CashBalanceForecastService:
-    return CashBalanceForecastService(artifacts, accounts)
+    return CashBalanceForecastService(artifacts)
 
 
 def get_savings_goal_service(
@@ -70,13 +44,11 @@ def get_savings_goal_service(
 
 def get_recurring_charges_service(
     artifacts: Annotated[ArtifactStore, Depends(get_artifact_store)],
-    accounts: Annotated[AccountOwnershipRepository, Depends(get_account_repository)],
 ) -> RecurringChargesForecastService:
-    return RecurringChargesForecastService(artifacts, accounts)
+    return RecurringChargesForecastService(artifacts)
 
 
 def get_anomaly_detection_service(
     artifacts: Annotated[ArtifactStore, Depends(get_artifact_store)],
-    accounts: Annotated[AccountOwnershipRepository, Depends(get_account_repository)],
 ) -> AnomalyDetectionService:
-    return AnomalyDetectionService(artifacts, accounts)
+    return AnomalyDetectionService(artifacts)

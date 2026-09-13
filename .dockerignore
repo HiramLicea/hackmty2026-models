@@ -1,6 +1,10 @@
 .git
 .env
 .venv
+.uv-venv
+.uv-venv312
+.uv-python
+.uv-cache
 __pycache__
 .pytest_cache
 .mypy_cache
@@ -8,4 +12,3 @@ __pycache__
 tests
 docs
 *.pyc
-

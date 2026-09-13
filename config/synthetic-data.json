@@ -1,0 +1,9 @@
+{
+  "schema_version": "1",
+  "seed": 2026,
+  "users": 120,
+  "months": 18,
+  "fixed_end_date": "2026-08-31",
+  "currency": "MXN",
+  "transactions_per_profile": {"minimum": 300, "maximum": 600}
+}

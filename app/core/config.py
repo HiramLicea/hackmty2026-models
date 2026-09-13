@@ -22,9 +22,7 @@ class Settings(BaseSettings):
     app_env: Literal["development", "test", "staging", "production"] = "development"
     docs_enabled: bool = True
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
-    supabase_url: str | None = None
-    supabase_service_role_key: SecretStr | None = None
-    mcp_api_key: SecretStr | None = None
+    inference_api_key: SecretStr | None = None
     model_artifact_dir: Path = Path("artifacts")
     model_manifest_path: Path = Path("artifacts/manifest.json")
 
