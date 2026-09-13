@@ -100,3 +100,17 @@ def test_ready_is_http_200_with_real_trained_artifacts(
     status_code, body = asyncio.run(request_ready())
     assert status_code == 200
     assert body["ready"] is True
+
+
+def test_cors_headers_allow_any_origin(configured_app: None) -> None:
+    del configured_app
+
+    async def request_cors() -> dict[str, str]:
+        transport = ASGITransport(app=app)
+        async with AsyncClient(transport=transport, base_url="http://test") as client:
+            response = await client.get("/health", headers={"Origin": "http://localhost:8081"})
+        assert response.status_code == 200
+        return dict(response.headers)
+
+    headers = asyncio.run(request_cors())
+    assert headers.get("access-control-allow-origin") == "http://localhost:8081"
